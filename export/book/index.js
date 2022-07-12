@@ -1,5 +1,5 @@
 var index = {
-    "NAME":"EXAMPLE",
+    "NAME":"An example book",
     "RENDERING" : "md",
     "ROOT" :"./"
 }
