@@ -4,20 +4,70 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <script src="book/index.js"></script>
+    <script>
+        var _name,_text,_rate,_i;
+        var typeIntoElement = (name,text,rate, i=0) => {
+            _name = name
+            _i = i
+            _text = text
+            _rate = rate
+            typeIntoElement_func()
+
+        }
+        var typeIntoElement_func = () => {
+            if (_i < _text.length) {
+                document.getElementById(_name).innerHTML= document.getElementById(_name).innerHTML += _text.charAt(_i)
+                _i++
+                setTimeout(typeIntoElement_func,_rate)
+            }
+        }
+    </script>
     <link href="./style.css" rel="stylesheet">
 
 </head>
 <body class="h-screen  bg-slate-800">
-<div id="titlebar" class="flex top-0 content-center text-center justify-center bg-gray-700 w-full mb-2 pt-2 pb-2 text-white text-base duration-100 shadow-gray-800 shadow-md border-none hover:border-gray-500 hover:border-solid hover:border-b-2">
-    <div id="b-title" class="font-bold px-1 py-1 text-slate-200 rounded-sm hover:bg-slate-100 hover:text-slate-900 duration-100 font-mono hover:font-sans">
+<div id="titlebar" class="flex top-0 content-center text-center justify-center bg-gray-700 w-full mb-2 pt-2 pb-2 text-white text-base duration-100 shadow-gray-800 shadow-md border-none hover:border-gray-500 hover:border-solid ">
+    <div id="b-title" class="font-bold px-1 py-1 text-slate-200 rounded-sm hover:bg-slate-800 duration-100 font-mono">
+        <!-- TITLE GOES HERE -->
     </div>
 </div>
-<script defer>
-    // quickly check the validity of index.js
-     if(typeof(index.RENDERING) === "string" && typeof(index.ROOT) === "string" && typeof(index.NAME) === "string"){}
-     else{throw new Error("TypeError in index file - Aborted for security reasons")}
+<div id="preloader" class="flex content-center items-center text-center bg-slate-900 justify-center h-screen left-0.5 mb-5 mt-5 mx-5 ">
+    <div id="preloader-text" class="text-white font-bold text-xl rounded-md bg-black p-2 font-mono animate-bounce"> 
+        > One moment...     
+    </div>
 
-    //set the name of the book
-    document.getElementById("b-title").innerHTML = index.NAME
+</div>
+<script>
+    var loader = async () => {
+        // quickly check the validity of index.js
+        if(typeof(index.RENDERING) === "string" && typeof(index.ROOT) === "string" && typeof(index.TITLE) === "string"){}
+         else{
+            throw "_misconfigured index"
+        }   
+    //set the title of the book
+        document.getElementById("b-title").innerHTML = index.TITLE
+    }
+   
+    </script>
+    <script>
+    async function main(){
+        console.log(1)
+        await loader().catch((error) => {
+            if(!typeof(error) === "string"){
+                if(error.startsWith("_")){
+                    document.getElementById('preloader-text').innerHTML = ""
+                    document.getElementById("preloader-text").className = "text-red-400 font-bold text-xl rounded-md bg-black p-2 font-mono"
+                    typeIntoElement('preloader-text','> Unable to load due to '+ error.substring(1), 20)
+                }
+            }
+
+            else{
+                document.getElementById('preloader-text').innerHTML = ""
+                document.getElementById("preloader-text").className = "text-red-400 font-bold text-xl rounded-md bg-black p-2 font-mono"
+                typeIntoElement('preloader-text','> An error has occured - check the console.', 20)
+            }
+        })
+    }
+    main()
     </script>
 </body>
