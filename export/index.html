@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="initial-scale=1.0">
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <script src="book/config.js"></script>
+    <!--TODO: Make this typing/animation function cleaner-->
     <script>
         var _name,_text,_rate,_i;
         var typeIntoElement = (name,text,rate, i=0) => {
@@ -22,33 +23,93 @@
             }
         }
     </script>
+    <script>
+            function makeRequest (method, url) {
+                return new Promise(function (resolve, reject) {
+                    var xhr = new XMLHttpRequest();
+                    xhr.open(method, url);
+                    xhr.onload = function () {
+                    if (xhr.status >= 200 && xhr.status < 300) {
+                        resolve(xhr.response);
+                    } else {
+                        reject({
+                        status: xhr.status,
+                        statusText: xhr.statusText
+                        });
+                    }
+                    };
+                    xhr.onerror = function () {
+                    reject({
+                        status: xhr.status,
+                        statusText: xhr.statusText
+                    });
+                    };
+                    xhr.send();
+                });
+            }
+
+        //get HTML from md from file in index
+        var getRenderedHTML = async (indexentry) => {
+            let res=null;
+            for(i in index.SETUP.INDEX){
+                if(i == indexentry){
+                    res = await makeRequest("GET", index.ROOT + index.SETUP.INDEX[i])
+                    break;
+                }
+            }
+
+            return res
+        }
+    </script>
     <link href="./style.css" rel="stylesheet">
 
 </head>
-<body class="h-screen  bg-slate-800">
-<div id="titlebar" class="flex top-0 content-center text-center justify-center bg-gray-700 w-full mb-2 pt-2 pb-2 text-white text-base duration-100 shadow-gray-800 shadow-md border-none hover:border-gray-500 hover:border-solid ">
-    <div id="b-title" class="font-bold px-1 py-1 text-slate-200 rounded-sm hover:bg-slate-800 duration-100 font-mono">
-        <!-- TITLE GOES HERE -->
-    </div>
-</div>
-<div id="preloader" class="flex content-center items-center text-center bg-slate-900 justify-center h-screen left-0.5 mb-5 mt-5 mx-5 ">
-    <div id="preloader-text" class="text-white font-bold text-xl rounded-md bg-black p-2 font-mono animate-bounce"> 
-        > One moment...     
-    </div>
 
-</div>
+
+
+<body class="h-screen">
+    <div id="preloader-wrapper" class="visible h-full w-full absolute" hidden>
+        <div id="preloader" class="flex w-full h-full items-center text-center bg-slate-900 justify-center left-0.5 -z-10">
+            <div id="preloader-text" class="text-white font-bold text-xl rounded-md bg-black p-2 font-mono animate-bounce"> 
+                > One moment...     
+        </div>
+    </div>
+    
+    </div>
+    <div class="visible">
+        <div class="h-screen  bg-slate-800 z-0">
+            <div id="titlebar" class="flex top-0 content-center text-center justify-center bg-gray-700 w-full pt-2 pb-2 text-white text-base duration-100 shadow-gray-800 shadow-md border-none hover:border-gray-500 hover:border-solid ">
+                <div id="b-title" class="font-bold px-1 py-1 text-slate-200 rounded-sm hover:bg-slate-800 duration-100 font-mono">
+                    <!-- TITLE GOES HERE -->
+                </div>
+            </div>
+            <div id="iframe-wrapper" class="bg-slate-200 m-5 rounded-md">
+                <iframe id="viewer" srcdoc="" sandbox = "allow-scripts allow-same-origin"></iframe>
+            </div>
+        </div>
+    </div>
+   
+
+    
+<!-- LOADER SCRIPT  - SHOULD SET UP INDEX/SIDEBAR + LOAD THE FIRST PAGE -->
+<!-- TODO: Create index/sidebar -->
 <script>
     var loader = async () => {
         // quickly check the validity of index.js
-        if(typeof(index.RENDERING) === "string" && typeof(index.ROOT) === "string" && typeof(index.TITLE) === "string"){}
+        if(typeof(index.ROOT) === "string" && typeof(index.TITLE) === "string"){}
          else{
             throw "_misconfigured index"
         }   
     //set the title of the book
         document.getElementById("b-title").innerHTML = index.TITLE
+        let startmd = await getRenderedHTML(index.SETUP.DEFAULT_INDEX)
+        let fontfam = "<link rel=\"stylesheet\" href=\"./book/pagestyle.css\">"
+        let synhighlight = "<link rel=\"stylesheet\" href=\"https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/styles/default.min.css\"><script src=\"https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/highlight.min.js\"><\/script>"
+        document.getElementById("viewer").srcdoc = "<head>" + fontfam /*+ synhighlight*/ + "</head>" + marked.parse(startmd)
     }
-   
     </script>
+
+<!-- MAIN -->
     <script>
     async function main(){
         await loader().catch((error) => {
