@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="book/index.js"></script>
+
+    <link href="./style.css" rel="stylesheet">
+
+</head>
+<body class="h-screen bg-gradient-to-b from-gray-600 to-gray-800">
+<div id="titlebar" class="flex top-0 content-center text-center justify-center bg-red-500 w-full pt-2 pb-2 text-white text-base hover:text-lg duration-150">
+    <div id="b-title" class="flex border-">
+    </div>
+</div>
+<script defer>
+    // quickly check the validity of index.js
+     if(typeof(index.RENDERING) === "string" && typeof(index.ROOT) === "string" && typeof(index.NAME) === "string"){}
+     else{throw new Error("TypeError in index file - Aborted for security reasons")}
+
+    //set the name of the book
+    document.getElementById("b-title").innerHTML = index.NAME
+    </script>
+</body>
