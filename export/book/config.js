@@ -1,5 +1,5 @@
 var index = {
-    "TITLE":"An example book",
+    "TITLE":"An example repobook page",
     "ROOT" :"./book/pages/",
     "SETUP":{
         "DEFAULT_INDEX":"Example entry",

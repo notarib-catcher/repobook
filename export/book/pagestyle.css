@@ -1,6 +1,45 @@
 @import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@700&display=swap');
 
 body{
-    overflow: hidden;
     font-family:'Nunito Sans';
+    -ms-overflow-style: none; /* for Internet Explorer, Edge */
+    scrollbar-width: none; /* for Firefox */
+    overflow-y: scroll; 
+    
+}
+
+body::-webkit-scrollbar {
+    display: none; /* for Chrome, Safari, and Opera */
+  }
+div::-webkit-scrollbar {
+    display: none; /* for Chrome, Safari, and Opera */
+  }
+
+pre code.hljs{
+    width: 70%;
+    display:block;
+    overflow-x: auto;
+    padding:1em
+}
+code.hljs{
+    padding:3px 5px
+}
+.hljs{
+    color:#ddd;
+    background:#303030
+}
+.hljs-keyword,.hljs-link,.hljs-literal,.hljs-section,.hljs-selector-tag{
+    color:#fff
+}
+.hljs-addition,.hljs-attribute,.hljs-built_in,.hljs-bullet,.hljs-name,.hljs-string,.hljs-symbol,.hljs-template-tag,.hljs-template-variable,.hljs-title,.hljs-type,.hljs-variable{
+    color:#d88
+}
+.hljs-comment,.hljs-deletion,.hljs-meta,.hljs-quote{
+    color:#979797
+}
+.hljs-doctag,.hljs-keyword,.hljs-literal,.hljs-name,.hljs-section,.hljs-selector-tag,.hljs-strong,.hljs-title,.hljs-type{
+    font-weight:700
+}
+.hljs-emphasis{
+    font-style:italic
 }
