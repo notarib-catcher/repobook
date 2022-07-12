@@ -922,6 +922,38 @@ input[type="range"]::-ms-fill-lower {
   height: 10/12;
 }
 
+.h-\[11\/12\] {
+  height: 11/12;
+}
+
+.h-modal {
+  height: calc(100% - 2rem);
+}
+
+.h-max {
+  height: -webkit-max-content;
+  height: -moz-max-content;
+  height: max-content;
+}
+
+.h-fit {
+  height: -webkit-fit-content;
+  height: -moz-fit-content;
+  height: fit-content;
+}
+
+.h-\[90\%\] {
+  height: 90%;
+}
+
+.h-\[85\%\] {
+  height: 85%;
+}
+
+.h-\[80\%\] {
+  height: 80%;
+}
+
 .w-full {
   width: 100%;
 }
