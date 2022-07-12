@@ -5,6 +5,10 @@ console.log("It supports code blocks~~~~~~~~~");
 let i = "And syntax highlighting!";
 ```
 
+```js
+//What was that? you're asking if the code blocks can resize? Well... I'm not sure... Let me double check.. OH! yeah they can. (And there's a scroll bar as backup anyway...)
+```
+
 An h1 header
 ============
 
