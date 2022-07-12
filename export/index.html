@@ -3,7 +3,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-    <script src="book/index.js"></script>
+    <script src="book/config.js"></script>
     <script>
         var _name,_text,_rate,_i;
         var typeIntoElement = (name,text,rate, i=0) => {
@@ -51,7 +51,6 @@
     </script>
     <script>
     async function main(){
-        console.log(1)
         await loader().catch((error) => {
             if(!typeof(error) === "string"){
                 if(error.startsWith("_")){
