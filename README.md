@@ -6,7 +6,7 @@ This project is a work in progress - For the moment, I have only made it functio
 
 Note: Markdown content is displayed inside an `iframe`, **not** in the main tab.
 
-## Build and deploy
+## Customize, build and deploy
 
 ### 1. Clone the repository
 
