@@ -14,7 +14,9 @@ Note: Markdown content is displayed inside an `iframe`, **not** in the main tab.
 
 ***
 
-### 2. Run the tailwind CLI build process
+### 2. Install, then run the tailwind CLI build process
+
+```npm i```
 
 ```npx tailwindcss -i ./tailwind-src/style.css -o ./export/style.css --watch```
 
